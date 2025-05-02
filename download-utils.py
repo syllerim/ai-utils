@@ -1,6 +1,5 @@
 import os
 import requests
-import gzip
 
 # Function to download and extract dataset
 def download_and_extract(url, output_dir="datasets"):
