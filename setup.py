@@ -9,8 +9,6 @@ setup(
     url="https://github.com/syllerim/ai-utils",
     packages=find_packages(),  # Automatically find Python modules
     install_requires=[
-        "gzip",
-        "os",
         "requests",
         "pandas"
     ],
