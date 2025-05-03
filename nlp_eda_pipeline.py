@@ -38,7 +38,7 @@ def run_eda_pipeline(file_name):
     # top 10 trigrams
     top_trigrams = get_top_ngrams(words, ngram_size=3, num_top_ngrams=10)
 
-    return df
+    return df, vocabulary, words, top_bigrams, top_trigrams
 
 
 # --------------- get_top_ngrams ---------------
