@@ -7,7 +7,7 @@ from nltk.stem import PorterStemmer
 
 # --------------- preprocess_dataframe ---------------
 
-def preprocessing_pipeline(
+def run_preprocessing_pipeline(
     df,
     text_column='reviewText',
     remove_numbers=True,
