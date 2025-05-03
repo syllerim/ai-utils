@@ -65,8 +65,8 @@ def get_top_ngrams(
     print(top_ngrams)
 
     print(f"\nTop {num_top_ngrams} {ngram_size}-grams:")
-    for bigram, freq in top_bigrams:
-      print(f"{freq:<5}  {' '.join(bigram)}")
+    for x_gram, freq in top_ngrams:
+      print(f"{freq:<5}  {' '.join(x_gram)}")
 
     # prepare data for the frequency diagram
     n_grams = [' '.join(ngram[0]) for ngram in top_ngrams]
