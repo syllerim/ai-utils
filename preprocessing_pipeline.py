@@ -120,3 +120,31 @@ def clean_tokens(
         cleaned.append(word)
 
     return cleaned
+
+# --------------- remove_duplicate_reviews ---------------
+
+def remove_duplicate_reviews(df, token_column='cleaned_tokens'):
+    """
+    Removes duplicate reviews from a DataFrame based on the cleaned token list.
+
+    Parameters:
+        df (pd.DataFrame): DataFrame containing tokenized and cleaned reviews.
+        token_column (str): Name of the column containing cleaned tokens.
+
+    Returns:
+        pd.DataFrame: DataFrame with duplicate reviews removed.
+    """
+    print("🗑️ Removing duplicate reviews based on cleaned text...")
+
+    # Create a temporary column by joining cleaned tokens into a single string
+    df['cleaned_review_str'] = df[token_column].apply(lambda tokens: ' '.join(tokens))
+
+    # Drop duplicates based on the joined string
+    df = df.drop_duplicates(subset='cleaned_review_str').reset_index(drop=True)
+
+    # Drop the helper column to keep things clean
+    df = df.drop(columns=['cleaned_review_str'])
+
+    print(f"✅ Duplicates removed. Remaining reviews: {len(df)}")
+
+    return df
