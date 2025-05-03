@@ -28,7 +28,7 @@ def preprocessing_pipeline(
     """
 
     print("🧹 Preprocessing pipeline...")
-    
+
     all_cleaned_tokens = df[text_column].apply(
         lambda review: preprocess_review(str(review), remove_numbers, do_stemming)
     )
@@ -37,7 +37,7 @@ def preprocessing_pipeline(
     flattened_tokens = [token for tokens in all_cleaned_tokens for token in tokens]
 
     return all_cleaned_tokens, flattened_tokens
-    
+
 # --------------- preprocess_review ---------------
 
 def preprocess_review(review, remove_numbers=True, do_stemming=True):
