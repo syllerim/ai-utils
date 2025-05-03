@@ -14,28 +14,28 @@ from wordcloud import WordCloud
 # --------------- run_eda_pipeline ---------------
 
 def run_eda_pipeline(file_name):
-    # dataset loading and preprocessing
+    print("\n--- Dataset loading and preprocessing --- ")
     df = process_dataset(file_name)
 
-    # analyze and add review length information to the dataframe
+    print("\n--- Analyze and add review length information to the dataframe --- ")
     df = analyze_review_lengths(df)
 
-    # vocabulary creation from tokenized text
+    print("\n--- Vocabulary creation from tokenized text --- ")
     vocabulary, words = create_vocabulary(df)
 
-    # wordCloud to visually highlight the most frequent words in the reviews
+    print("\n--- WordCloud to visually highlight the most frequent words in the reviews --- ")
     generate_wordcloud(vocabulary, title="Most Frequent Words in Reviews")
 
-    # distribution of reviews by sentiment
+    print("\n--- Distribution of reviews by sentiment --- ")
     plot_sentiment_distribution(df)
 
-    # encode sentiment labels based on the 'overall' rating and visualize the class distribution
+    print("\n--- Encode sentiment labels based on the 'overall' rating and visualize the class distribution --- ")
     df = encode_and_plot_sentiment(df, label_sentiment)
 
-    # top 10 bigrams
+    print("\n--- Top 10 bigrams --- ")
     top_bigrams = get_top_ngrams(words, ngram_size=2, num_top_ngrams=10)
 
-    # top 10 trigrams
+    print("\n--- Top 10 trigrams --- ")
     top_trigrams = get_top_ngrams(words, ngram_size=3, num_top_ngrams=10)
 
     return df, vocabulary, words, top_bigrams, top_trigrams
