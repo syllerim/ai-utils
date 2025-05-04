@@ -146,3 +146,27 @@ def plot_top_chi2_words(X_tfidf, y, vectorizer, top_n=15, figsize=(12, 8)):
     plt.grid()
     plt.tight_layout()
     plt.show()
+
+# --------------- plot_precision_recall_vs_threshold ---------------
+
+def plot_precision_recall_vs_threshold(precisions, recalls, thresholds):
+    plt.figure(figsize=(8, 6))
+    plt.title("Precision and Recall Scores as a function of the decision threshold")
+
+    plt.plot(thresholds, precisions[:-1], "b--", label="Precision")
+    plt.plot(thresholds, recalls[:-1], "g-", label="Recall")
+    plt.ylabel("Score")
+    plt.xlabel("Decision Threshold")
+    plt.legend(loc='best')
+
+# --------------- predict_review_sentiment ---------------
+
+def predict_review_sentiment(review_index, df, model, vectorizer, text_column='reviewText'):
+    actual = df.iloc[review_index]['sentiment_label']
+    raw_text = df.iloc[review_index][text_column]
+
+    transformed = vectorizer.transform([raw_text])
+    prediction = model.predict(transformed)[0]
+
+    print(f'Actual sentiment: {actual} ({ "positive" if actual == 1 else "negative" })')
+    print(f'Predicted sentiment: {prediction} ({ "positive" if prediction == 1 else "negative" })')
