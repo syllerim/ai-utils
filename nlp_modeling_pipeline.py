@@ -2,6 +2,14 @@ from sklearn.model_selection import train_test_split
 import random
 import pandas as pd
 
+# --------------- load_dataframe_csv ---------------
+
+def load_dataframe_csv(path):
+    import pandas as pd
+    df = pd.read_csv(path, sep=',', decimal='.')
+    print(f"DataFrame loaded from: {path} with shape: {df.shape}")
+    return df
+
 # --------------- save_dataframe_csv ---------------
 
 def save_dataframe_csv(df, path):
@@ -23,6 +31,7 @@ def process_and_save_splits(df, name, full_path, train_path, test_path, test_siz
     # save train and test splits
     save_dataframe_csv(train_df, train_path)
     save_dataframe_csv(test_df, test_path)
+
 
 # --------------- load_and_extract_tokens ---------------
 
