@@ -1,6 +1,8 @@
-from sklearn.model_selection import train_test_split
 import random
 import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.feature_selection import chi2
+import matplotlib.pyplot as plt
 
 # --------------- load_dataframe_csv ---------------
 
@@ -102,3 +104,45 @@ def inspect_review_tfidf(X_tokens, y_labels, X_tfidf, vectorizer, index=None, to
 
     print(f"\n🔻 Top {top_n} words with lowest (non-zero) TF-IDF:")
     print(df_tfidf.sort_values(by="tfidf", ascending=False).tail(top_n))
+
+# --------------- plot_top_chi2_words ---------------
+
+def plot_top_chi2_words(X_tfidf, y, vectorizer, top_n=15, figsize=(12, 8)):
+    """
+    Compute and plot the top N words with the highest Chi-squared score
+    for binary classification (e.g. sentiment analysis).
+
+    Parameters:
+        X_tfidf (sparse matrix): TF-IDF feature matrix.
+        y (array-like): Target labels.
+        vectorizer (TfidfVectorizer): Fitted vectorizer.
+        top_n (int): Number of top words to display.
+        figsize (tuple): Size of the plot.
+
+    Returns:
+        None
+    """
+    # compute chi-squared scores
+    chi2_scores = chi2(X_tfidf, y)[0]
+
+    # pair scores with feature names
+    word_scores = list(zip(vectorizer.get_feature_names_out(), chi2_scores))
+
+    # sort by score
+    sorted_scores = sorted(word_scores, key=lambda x: x[1])
+
+    # take the top N
+    top_words, top_scores = zip(*sorted_scores[-top_n:])
+
+    # plot
+    x = range(len(top_scores))
+    plt.figure(figsize=figsize)
+    plt.barh(x, top_scores, align='center', alpha=0.5)
+    plt.plot(top_scores, x, '-o', markersize=5, alpha=0.8)
+    plt.yticks(x, top_words, fontsize=12)
+    plt.xlabel('$\chi^2$', fontsize=26)
+    plt.ylabel('word', fontsize=16)
+    plt.title(f'Top {top_n} words by $\chi^2$ score (feature-label association)', fontsize=20)
+    plt.grid()
+    plt.tight_layout()
+    plt.show()
