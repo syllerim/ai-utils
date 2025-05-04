@@ -10,6 +10,7 @@ from nltk.stem import PorterStemmer
 def run_preprocessing_pipeline(
     df,
     text_column='reviewText',
+    token_column='cleaned_tokens',
     remove_numbers=True,
     do_stemming=True
 ):
@@ -23,20 +24,33 @@ def run_preprocessing_pipeline(
         do_stemming (bool): Whether to apply stemming.
 
     Returns:
+        df (pd.DataFrame): The DataFrame result of preprocessing reviews.
         list of list: List of cleaned tokens per review.
         list: Flattened list of all tokens.
     """
 
-    print("🧹 Preprocessing pipeline...")
+    print("🧹 Starting preprocessing of reviews...")
 
+    # apply preprocessing to each review
     all_cleaned_tokens = df[text_column].apply(
         lambda review: preprocess_review(str(review), remove_numbers, do_stemming)
     )
+    print("\n- Tokenization and preprocessing complete.")
 
-    # flatten the token lists
+    # flatten the token lists to get a single list of all tokens
     flattened_tokens = [token for tokens in all_cleaned_tokens for token in tokens]
+    print(f"\n- Flattened all tokens — total tokens: {len(flattened_tokens)}")
 
-    return all_cleaned_tokens, flattened_tokens
+    # store tokenized reviews in a new column
+    df[token_column] = all_cleaned_tokens
+    print(f"\n- Stored cleaned tokens in column '{token_column}'.")
+
+    # remove duplicates
+    original_count = len(df)
+    df = remove_duplicate_reviews(df, token_column)
+    print(f"\n- Removed {original_count - len(df)} duplicate reviews.")
+
+    return df, all_cleaned_tokens, flattened_tokens
 
 # --------------- preprocess_review ---------------
 
@@ -134,7 +148,6 @@ def remove_duplicate_reviews(df, token_column='cleaned_tokens'):
     Returns:
         pd.DataFrame: DataFrame with duplicate reviews removed.
     """
-    print("🗑️ Removing duplicate reviews based on cleaned text...")
 
     # Create a temporary column by joining cleaned tokens into a single string
     df['cleaned_review_str'] = df[token_column].apply(lambda tokens: ' '.join(tokens))
@@ -144,7 +157,5 @@ def remove_duplicate_reviews(df, token_column='cleaned_tokens'):
 
     # Drop the helper column to keep things clean
     df = df.drop(columns=['cleaned_review_str'])
-
-    print(f"✅ Duplicates removed. Remaining reviews: {len(df)}")
 
     return df
