@@ -170,3 +170,4 @@ def predict_review_sentiment(review_index, df, model, vectorizer, text_column='r
 
     print(f'Actual sentiment: {actual} ({ "positive" if actual == 1 else "negative" })')
     print(f'Predicted sentiment: {prediction} ({ "positive" if prediction == 1 else "negative" })')
+
