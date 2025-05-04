@@ -89,7 +89,7 @@ def sentence_normalization(sentence):
     Returns:
         str: Normalized sentence.
     """
-    # Normalize the sentence
+    # normalize the sentence
     sentence = unicodedata.normalize('NFKD', sentence).lower().encode('ascii', errors='ignore').decode('utf-8')
     sentence = re.sub(' +', ' ', ' '.join([word if word.isalpha() else '' for word in sentence.split()])).strip()
     return sentence
@@ -112,22 +112,28 @@ def clean_tokens(
     Returns:
         list: Cleaned list of tokens.
     """
-    # Initialize components
+    # initialize components
     stop_words = set(stopwords.words('english'))
     stemmer = PorterStemmer()
+
+    # define junk fragments to remove
+    junk_tokens = {'co', 'com', 'www', 'htt', 'https', 'th'}
 
     cleaned = []
     for word in tokens:
         word = word.lower()  # lowercase
         word = word.strip(string.punctuation)  # remove punctuation from edges
 
-        # Remove if it's a stopword, empty, or (optionally) a number
+        # remove if it's a stopword, empty, or (optionally) a number
         if (not word or
             word in stop_words or
-            (remove_numbers and word.isdigit())):
+            word in junk_tokens or
+            (remove_numbers and word.isdigit()) or
+            len(word) <= 2
+        ):
             continue
 
-        # Apply stemming
+        # apply stemming
         if do_stemming:
             word = stemmer.stem(word)
 
@@ -149,13 +155,13 @@ def remove_duplicate_reviews(df, token_column='cleaned_tokens'):
         pd.DataFrame: DataFrame with duplicate reviews removed.
     """
 
-    # Create a temporary column by joining cleaned tokens into a single string
+    # create a temporary column by joining cleaned tokens into a single string
     df['cleaned_review_str'] = df[token_column].apply(lambda tokens: ' '.join(tokens))
 
-    # Drop duplicates based on the joined string
+    # drop duplicates based on the joined string
     df = df.drop_duplicates(subset='cleaned_review_str').reset_index(drop=True)
 
-    # Drop the helper column to keep things clean
+    # drop the helper column to keep things clean
     df = df.drop(columns=['cleaned_review_str'])
 
     return df
