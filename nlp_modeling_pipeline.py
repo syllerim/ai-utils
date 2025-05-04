@@ -9,13 +9,15 @@ def save_dataframe_csv(df, path):
 
 # --------------- process_and_save_splits ---------------
 
-def process_and_save_splits(df, full_path, train_path, test_path, test_size=0.25, random_state=0):
+def process_and_save_splits(df, name, full_path, train_path, test_path, test_size=0.25, random_state=0):
+    print(f"\n📁 Processing dataset: {name}")
+
     # save the full dataframe
     save_dataframe_csv(df, full_path)
 
     # split into train and test
     train_df, test_df = train_test_split(df, test_size=test_size, shuffle=True, random_state=random_state)
-    print(f"train set shape: {train_df.shape}, test set shape: {test_df.shape}")
+    print(f"{name} train shape: {train_df.shape}, test shape: {test_df.shape}")
 
     # save train and test splits
     save_dataframe_csv(train_df, train_path)
