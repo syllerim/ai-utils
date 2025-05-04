@@ -5,7 +5,6 @@ import pandas as pd
 # --------------- load_dataframe_csv ---------------
 
 def load_dataframe_csv(path):
-    import pandas as pd
     df = pd.read_csv(path, sep=',', decimal='.')
     print(f"DataFrame loaded from: {path} with shape: {df.shape}")
     return df
