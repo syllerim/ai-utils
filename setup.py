@@ -2,12 +2,12 @@ from setuptools import setup, find_packages
 
 setup(
     name="ai-utils",
-    version="0.1.0",  # Initial version
-    description="A utility package for ai-utils",
+    version="0.1.1",
+    description="Utility packages for ML, NLP, LLMs",
     author="Mirellys Arteta Davila",
     author_email="mirellys710@gmail.com",
     url="https://github.com/syllerim/ai-utils",
-    packages=find_packages(),  # Automatically find Python modules
+    packages=find_packages(),
     install_requires=[
         "requests",
         "pandas"
