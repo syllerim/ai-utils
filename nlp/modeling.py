@@ -54,7 +54,7 @@ def process_and_save_splits_basic(df, name, target, full_path, train_path, test_
     save_dataframe_csv(train_df, train_path)
 
     # save test set without target
-    save_dataframe_csv(test_df), test_path)
+    save_dataframe_csv(test_df, test_path)
 
     # save test target separately
     save_dataframe_csv(test_df[[target]], test_target_path)
