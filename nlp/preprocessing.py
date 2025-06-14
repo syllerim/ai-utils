@@ -7,7 +7,7 @@ from nltk.stem import PorterStemmer
 
 # --------------- preprocess_dataframe ---------------
 
-def run_preprocessing_pipeline(
+def run_pipeline(
     df,
     text_column='reviewText',
     token_column='cleaned_tokens',
