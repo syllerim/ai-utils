@@ -13,7 +13,7 @@ from wordcloud import WordCloud
 
 # --------------- run_eda_pipeline ---------------
 
-def run_eda_pipeline(file_name):
+def run_pipeline(file_name):
     print("\n--- Dataset loading and preprocessing --- ")
     df = process_dataset(file_name)
 
