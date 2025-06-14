@@ -10,7 +10,6 @@ num2words
 numpy
 pandas==1.5.3
 plotly_express
-pyDAWG
 pyLDAvis
 scikit-learn
 scipy
