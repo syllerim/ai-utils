@@ -165,7 +165,7 @@ def plot_top_chi2_words(X_tfidf, y, vectorizer, top_n=15, figsize=(12, 8)):
     plt.barh(x, top_scores, align='center', alpha=0.5)
     plt.plot(top_scores, x, '-o', markersize=5, alpha=0.8)
     plt.yticks(x, top_words, fontsize=12)
-    plt.xlabel('r$\chi^2$', fontsize=26)
+    plt.xlabel(r'$\chi^2$', fontsize=26)
     plt.ylabel('word', fontsize=16)
     plt.title(rf'Top {top_n} words by $\chi^2$ score (feature-label association)', fontsize=20)
     plt.grid()
