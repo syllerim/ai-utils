@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="ai-utils",
-    version="0.1.1",
+    version="0.1.2",
     description="Utility packages for ML, NLP, LLMs",
     author="Mirellys Arteta Davila",
     author_email="mirellys710@gmail.com",
